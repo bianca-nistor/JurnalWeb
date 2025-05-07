@@ -1,0 +1,65 @@
+﻿@page
+@model SignupModel
+@{
+    ViewData["Title"] = "Înregistrare";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="margin-top:80px;">
+    <div class="card shadow p-4" style="max-width: 400px; width: 100%; border-radius: 16px; background-color: #ffe0ec" ">
+        <h2 class="text-center mb-4">✍️ Creare Cont Nou</h2>
+
+        <form method="post">
+            <div class="form-group mb-3">
+                <label for="Username">Nume utilizator</label>
+                <input asp-for="User.Username" class="form-control" id="Username" />
+                <span asp-validation-for="User.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="Password">Parolă</label>
+                <input asp-for="User.Password" type="password" class="form-control" id="Password" />
+                <span asp-validation-for="User.Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-block pastel-button w-100">Creează cont</button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.Mesaj))
+        {
+            <div class="alert alert-info mt-3">@Model.Mesaj</div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

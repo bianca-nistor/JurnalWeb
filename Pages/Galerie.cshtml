@@ -1,0 +1,71 @@
+﻿@page
+@model JurnalWeb.Pages.GalerieModel
+@{
+    ViewData["Title"] = "Momente de neuitat";
+}
+
+<style>
+    .sticky-note {
+        width: 130px;
+        height: 130px;
+        padding: 10px;
+       /* box-shadow: 3px 3px 8px rgba(0,0,0,0.1);*/
+        transform: rotate(-2deg);
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .green {
+        background-color: #e6f4ead4;
+        position: absolute;
+        top: 80px;
+        left: 20px;
+    }
+
+    .pastel-button {
+        background-color: #fff3b0;
+        border: none;
+        color: #333;
+    }
+
+        .pastel-button:hover {
+            background-color: #ffe066;
+        }
+</style>
+
+<div class="note green" style="position:absolute; top:80px; left:30px; width:130px; height:130px;">
+    Momente de neuitat
+</div>
+
+<div>
+<div class="container mt-5 pt-5">
+    <h2 class="text-center" style="color:#d17b88;">Adaugă o amintire</h2>
+
+        <form method="post" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                <label for="imageFile">Selectează o imagine</label>
+                <input type="file" class="form-control" id="imageFile" name="ImageFile" accept="image/*" required />
+            </div>
+            <div class="mb-3">
+                <label for="note">Notiță (opțional)</label>
+                <textarea class="form-control" id="note" name="Note" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn pastel-button">Salvează</button>
+        </form>
+
+    <h4 class="text-center mb-4">Galerie</h4>
+    <div class="row">
+        @foreach (var entry in Model.Entries)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="~/uploads/@entry.FileName" class="card-img-top" />
+                    <div class="card-body">
+                        <p class="card-text">@entry.Note</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</div>

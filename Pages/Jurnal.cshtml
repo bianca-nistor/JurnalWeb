@@ -1,0 +1,44 @@
+﻿@page
+@model JurnalModel
+@{
+    ViewData["Title"] = "Jurnalul Meu";
+}
+
+<h2>Adaugă notiță</h2>
+
+<form method="post" class="card p-4 pastel-card shadow-sm">
+    <div class="mb-3">
+        <label class="form-label">Titlu:</label>
+        <input asp-for="Nota.Titlu" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Conținut:</label>
+        <textarea asp-for="Nota.Continut" class="form-control" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn pastel-button">Salvează</button>
+</form>
+
+<hr />
+
+<h2>Notițele Tale</h2>
+
+@if (Model.Note.Count == 0)
+{
+    <p>Nu ai încă notițe salvate.</p>
+}
+else
+{
+    <ul>
+        @foreach (var n in Model.Note.OrderByDescending(n => n.Data))
+        {
+            <div class="card my-3 pastel-card">
+                <div class="card-header pastel-header fw-bold">@n.Titlu</div>
+                <div class="card-body">
+                    <p>@n.Continut</p>
+                    <small class="text-muted">Data: @n.Data.ToShortDateString()</small>
+                </div>
+            </div>
+        }
+
+    </ul>
+}

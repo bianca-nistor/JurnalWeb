@@ -1,0 +1,19 @@
+﻿@page
+@model DashboardModel
+@{
+    ViewData["Title"] = "Jurnalul tău";
+}
+
+<div class="text-center">
+    <h1 class="display-4" style="color: #d17b88;">Bine ai revenit, @Model.Username!</h1>
+    <p class="lead">Notează-ți gândurile sau revizuiește momentele importante din jurnalul tău.</p>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4">
+            <a class="btn pastel-button btn-lg w-100 mb-3" asp-page="/Jurnal">📔 Deschide Jurnalul</a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn pastel-button btn-lg w-100 mb-3" asp-page="/Galerie">📷 Vezi Galeria</a>
+        </div>
+    </div>
+</div>

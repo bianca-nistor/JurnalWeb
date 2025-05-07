@@ -1,0 +1,28 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Autentificare";
+}
+
+<div class="d-flex justify-content-center" style="margin-top: 80px;">
+    <div class="card shadow p-4" style="max-width: 400px; width: 100%; border-radius: 16px; background-color: #ffe0ec;">
+        <h2 class="text-center mb-4">🔒 Autentificare</h2>
+
+        <form method="post">
+            <div class="form-group mb-3">
+                <label>Nume utilizator</label>
+                <input asp-for="User.Username" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label>Parolă</label>
+                <input asp-for="User.Password" class="form-control" type="password" />
+            </div>
+            <button type="submit" class="btn btn-block pastel-button w-100">Autentificare</button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.Mesaj))
+        {
+            <div class="alert alert-danger mt-3">@Model.Mesaj</div>
+        }
+    </div>
+</div>

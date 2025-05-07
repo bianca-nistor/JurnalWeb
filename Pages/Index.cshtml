@@ -1,0 +1,23 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Bine ai venit!";
+}
+
+<div class="text-center">
+    <h1 class="display-4 mb-4" style="color:#d17b88;">Bine ai venit în Jurnalul tău!</h1>
+    <p class="lead">Notează-ți gândurile, ideile și momentele importante într-un spațiu doar al tău.</p>
+
+    <div class="sticky-background">
+        <div class="note yellow">📔 Scrie o notiță zilnică!</div>
+        <div class="note pink">🌟 Creează-ți o rutină relaxantă</div>
+        <div class="note blue">✍️ Notează-ți ideile importante</div>
+        <div class="note green">🔒 Datele tale sunt 100% private</div>
+    </div>
+
+    <div class="mt-5">
+     <a class="btn pastel-button btn-lg me-2" asp-page="/Login">Autentificare</a>
+    <a class="btn btn-outline-secondary btn-lg" asp-page="/Signup">Creare cont nou</a>
+
+</div>
+ 
