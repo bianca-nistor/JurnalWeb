@@ -4,6 +4,16 @@
     ViewData["Title"] = "Momente de neuitat";
 }
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3ZXSSHJBN"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y3ZXSSHJBN');
+</script>
+
 <style>
     .sticky-note {
         width: 130px;
@@ -33,39 +43,45 @@
         }
 </style>
 
-<div class="note green" style="position:absolute; top:80px; left:30px; width:130px; height:130px;">
+@* <div class="note green" style="position:absolute; top:80px; left:30px; width:130px; height:130px;">
     Momente de neuitat
-</div>
+</div>*@
 
 <div>
-<div class="container mt-5 pt-5">
-    <h2 class="text-center" style="color:#d17b88;">Adaugă o amintire</h2>
+    <div class="container mt-3">
+        <h2 class="text-center" style="color:#d17b88;">Adaugă o amintire</h2>
 
-        <form method="post" enctype="multipart/form-data" class="mb-4">
+        <form method="post" enctype="multipart/form-data" class="card p-4 pastel-card shadow-sm mb-4">
+            <h5 class="mb-3" style="color:#d17b88;">Încarcă o imagine nouă</h5>
             <div class="mb-3">
-                <label for="imageFile">Selectează o imagine</label>
+               
                 <input type="file" class="form-control" id="imageFile" name="ImageFile" accept="image/*" required />
             </div>
             <div class="mb-3">
-                <label for="note">Notiță (opțional)</label>
+                <label for="note" class="form-label">Notiță (opțional)</label>
                 <textarea class="form-control" id="note" name="Note" rows="2"></textarea>
             </div>
             <button type="submit" class="btn pastel-button">Salvează</button>
         </form>
 
+
     <h4 class="text-center mb-4">Galerie</h4>
     <div class="row">
-        @foreach (var entry in Model.Entries)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm">
-                    <img src="~/uploads/@entry.FileName" class="card-img-top" />
-                    <div class="card-body">
-                        <p class="card-text">@entry.Note</p>
+            @foreach (var entry in Model.Entries)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="~/uploads/@entry.FileName" class="card-img-top" />
+                        <div class="card-body">
+                            <p class="card-text">@entry.Note</p>
+                            <form method="post" asp-page-handler="Delete" asp-route-filename="@entry.FileName" onsubmit="return confirm('Ești sigur că vrei să ștergi această imagine?');">
+                                <button type="submit" class="btn btn-sm btn-danger">🗑️ </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+
     </div>
 </div>
 </div>

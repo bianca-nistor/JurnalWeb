@@ -4,16 +4,111 @@
     ViewData["Title"] = "Jurnalul tău";
 }
 
-<div class="text-center">
-    <h1 class="display-4" style="color: #d17b88;">Bine ai revenit, @Model.Username!</h1>
-    <p class="lead">Notează-ți gândurile sau revizuiește momentele importante din jurnalul tău.</p>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3ZXSSHJBN"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-    <div class="row justify-content-center mt-4">
-        <div class="col-md-4">
-            <a class="btn pastel-button btn-lg w-100 mb-3" asp-page="/Jurnal">📔 Deschide Jurnalul</a>
+    gtag('config', 'G-Y3ZXSSHJBN');
+</script>
+
+
+
+
+<div class="text-center">
+    <h1 class="display-4 mb-3" style="color: #d17b88;">Bine ai revenit, @Model.Username!</h1>
+
+    <!-- Spațiu între titlu și text -->
+    <p class="lead mb-5">Notează-ți gândurile sau revizuiește momentele importante din jurnalul tău.</p>
+
+    <!-- Spațiu între text și butoane -->
+    <div id="butonContainer" class="row justify-content-center mb-5">
+        <div id="btnContainer1" class="col-md-4">
+            <a id="btnJurnal" class="btn pastel-button btn-lg w-100 mb-3"
+               asp-page="/Jurnal"
+               onclick="contorizeaza('btnJurnal')">📔 Deschide Jurnalul</a>
         </div>
-        <div class="col-md-4">
-            <a class="btn pastel-button btn-lg w-100 mb-3" asp-page="/Galerie">📷 Vezi Galeria</a>
+        <div id="btnContainer2" class="col-md-4">
+            <a onclick="gtag('event', 'click', { 'event_category': 'Navigare', 'event_label': 'Galerie' });"
+               class="btn pastel-button btn-lg w-100 mb-3"
+               asp-page="/Galerie">📷 Vezi Galeria</a>
+        </div>
+    </div>
+
+    <!-- Spațiu mai generos între butoane și personalizare -->
+    <div class="mt-5 mx-auto text-center" style="max-width: 600px;">
+        <div class="p-4 pastel-card" style="border-radius: 16px;">
+            <h4 class="mb-4" style="color: #d17b88;">🎨 Personalizează-ți jurnalul</h4>
+
+            <div class="row mb-3">
+                <div class="col-md-6 text-start">
+                    <label class="form-label">Culoare fundal:</label>
+                    <input type="color" id="bgColor" class="form-control form-control-color pastel-button" value="#fff9f5" />
+                </div>
+                <div class="col-md-6 text-start">
+                    <label class="form-label">Culoare text:</label>
+                    <input type="color" id="textColor" class="form-control form-control-color pastel-button" value="#333333" />
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3">
+                <button id="savePrefs" class="btn pastel-button w-50">💾 Salvează</button>
+                <button id="resetPrefs" class="btn pastel-button w-50">🔄 Implicit</button>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        // Aplică stiluri salvate
+        window.addEventListener('DOMContentLoaded', () => {
+            const bg = localStorage.getItem('jurnal_bg');
+            const text = localStorage.getItem('jurnal_text');
+            if (bg) document.body.style.backgroundColor = bg;
+            if (text) document.body.style.color = text;
+        });
+
+        document.getElementById('savePrefs')?.addEventListener('click', () => {
+            const bg = document.getElementById('bgColor').value;
+            const text = document.getElementById('textColor').value;
+            localStorage.setItem('jurnal_bg', bg);
+            localStorage.setItem('jurnal_text', text);
+            document.body.style.backgroundColor = bg;
+            document.body.style.color = text;
+        });
+
+        document.getElementById('resetPrefs')?.addEventListener('click', () => {
+            localStorage.removeItem('jurnal_bg');
+            localStorage.removeItem('jurnal_text');
+            document.body.style.backgroundColor = '#fff9f5';
+            document.body.style.color = '#333';
+        });
+
+                    function contorizeaza(controlId) {
+                const key = `clicks_${controlId}`;
+                let clicks = localStorage.getItem(key);
+                clicks = clicks ? parseInt(clicks) + 1 : 1;
+                localStorage.setItem(key, clicks);
+                console.log(`${controlId}: ${clicks}`);
+            }
+            window.onload = function () {
+                const butoane = ['btnSalveazaNotita', 'btnVeziGalerie'];
+                butoane.sort((a, b) => {
+                    const aClicks = parseInt(localStorage.getItem(`clicks_${a}`)) || 0;
+                    const bClicks = parseInt(localStorage.getItem(`clicks_${b}`)) || 0;
+                    return bClicks - aClicks; // Cel mai folosit primul
+                });
+
+                const container = document.getElementById('butonContainer');
+                butoane.forEach(id => {
+                    const btn = document.getElementById(id);
+                    if (btn) container.appendChild(btn); // Mută ordinea în DOM
+                });
+            };
+
+
+    </script>
+}

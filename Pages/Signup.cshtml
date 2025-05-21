@@ -5,7 +5,7 @@
 }
 
 <div class="d-flex justify-content-center align-items-center" style="margin-top:80px;">
-    <div class="card shadow p-4" style="max-width: 400px; width: 100%; border-radius: 16px; background-color: #ffe0ec" ">
+    <div class="card shadow p-4" style="max-width: 400px; width: 100%; border-radius: 16px; background-color: #ffe0ec">
         <h2 class="text-center mb-4">✍️ Creare Cont Nou</h2>
 
         <form method="post">
@@ -19,13 +19,18 @@
                 <input asp-for="User.Password" type="password" class="form-control" id="Password" />
                 <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
+            <div class="text-center mt-3 mb-3">
+                <small>Ai deja cont? <a href="/Login">Conectează-te</a></small>
+            </div>
+
             <button type="submit" class="btn btn-block pastel-button w-100">Creează cont</button>
         </form>
-
         @if (!string.IsNullOrEmpty(Model.Mesaj))
         {
             <div class="alert alert-info mt-3">@Model.Mesaj</div>
         }
+
+        
     </div>
 </div>
 

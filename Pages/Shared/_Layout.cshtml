@@ -1,6 +1,16 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3ZXSSHJBN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Y3ZXSSHJBN');
+    </script>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - JurnalWeb</title>
@@ -68,6 +78,21 @@
     }
 </style>
 
+@if (Context.Session.GetString("username") != null)
+{
+    /*
+    <div id="personalizare" style="position: fixed; top: 80px; right: 20px; background: #fff3b0; padding: 12px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 1000;">
+        <label style="font-weight: 500;">Fundal:</label>
+        <input type="color" id="bgColor" value="#fff9f5" style="margin-bottom: 6px;"><br />
+        <label style="font-weight: 500;">Text:</label>
+        <input type="color" id="textColor" value="#333333"><br />
+        <button id="savePrefs" class="btn btn-sm btn-secondary mt-2">Salvează</button>
+        <button id="resetPrefs" class="btn btn-sm btn-light mt-1">Reset</button>
+    </div>  */
+}
+
+
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -125,5 +150,34 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+
+    @if (Context.Session.GetString("username") != null)
+    {
+        <script>
+            function aplicaPreferinte() {
+                const bg = localStorage.getItem('bgColor') || '#fff9f5';
+                const text = localStorage.getItem('textColor') || '#333333';
+                document.body.style.backgroundColor = bg;
+                document.body.style.color = text;
+            }
+
+            document.getElementById('savePrefs').addEventListener('click', function () {
+                localStorage.setItem('bgColor', document.getElementById('bgColor').value);
+                localStorage.setItem('textColor', document.getElementById('textColor').value);
+                aplicaPreferinte();
+            });
+
+            document.getElementById('resetPrefs').addEventListener('click', function () {
+                localStorage.removeItem('bgColor');
+                localStorage.removeItem('textColor');
+                aplicaPreferinte();
+            });
+
+            aplicaPreferinte();
+        </script>
+    }
+
+
 </body>
 </html>

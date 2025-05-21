@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -38,7 +38,7 @@ namespace JurnalWeb.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            OnGet(); // �ncarc? deja salv?rile existente
+            OnGet(); // Încarc? deja salv?rile existente
 
             if (ImageFile != null && ImageFile.Length > 0)
             {
@@ -61,7 +61,7 @@ namespace JurnalWeb.Pages
                     Note = Note ?? ""
                 });
 
-                // Salvare �n fi?ier JSON
+                // Salvare în fi?ier JSON
                 var json = JsonSerializer.Serialize(Entries);
                 var appData = Path.Combine(Directory.GetCurrentDirectory(), "App_Data");
                 if (!Directory.Exists(appData)) Directory.CreateDirectory(appData);
@@ -70,5 +70,26 @@ namespace JurnalWeb.Pages
 
             return RedirectToPage();
         }
+        public IActionResult OnPostDelete(string filename)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", filename);
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+
+            // Șterge din gallery.json
+            string jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "gallery.json");
+            if (System.IO.File.Exists(jsonPath))
+            {
+                var json = System.IO.File.ReadAllText(jsonPath);
+                var list = JsonSerializer.Deserialize<List<GalleryEntry>>(json) ?? new List<GalleryEntry>();
+                list = list.Where(e => e.FileName != filename).ToList();
+                System.IO.File.WriteAllText(jsonPath, JsonSerializer.Serialize(list));
+            }
+
+            return RedirectToPage();
+        }
+
     }
 }

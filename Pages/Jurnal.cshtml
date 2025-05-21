@@ -3,42 +3,89 @@
 @{
     ViewData["Title"] = "Jurnalul Meu";
 }
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3ZXSSHJBN"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y3ZXSSHJBN');
+</script>
 
 <h2>Adaugă notiță</h2>
 
-<form method="post" class="card p-4 pastel-card shadow-sm">
-    <div class="mb-3">
-        <label class="form-label">Titlu:</label>
-        <input asp-for="Nota.Titlu" class="form-control" required />
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Conținut:</label>
-        <textarea asp-for="Nota.Continut" class="form-control" rows="4" required></textarea>
-    </div>
-    <button type="submit" class="btn pastel-button">Salvează</button>
-</form>
+<!-- Început container de notițe personalizabil -->
+<div id="noteContainer">
 
-<hr />
+    <form method="post" class="card p-4 pastel-card shadow-sm">
+        <div class="mb-3">
+            <label class="form-label">Titlu:</label>
+            <input asp-for="Nota.Titlu" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Conținut:</label>
+            <textarea asp-for="Nota.Continut" class="form-control" rows="4" required></textarea>
+        </div>
+        <button id="btnSalveazaNotita" type="submit" class="btn pastel-button">Salvează</button>
+       
 
-<h2>Notițele Tale</h2>
+    </form>
 
-@if (Model.Note.Count == 0)
-{
-    <p>Nu ai încă notițe salvate.</p>
-}
-else
-{
-    <ul>
-        @foreach (var n in Model.Note.OrderByDescending(n => n.Data))
-        {
-            <div class="card my-3 pastel-card">
-                <div class="card-header pastel-header fw-bold">@n.Titlu</div>
-                <div class="card-body">
-                    <p>@n.Continut</p>
-                    <small class="text-muted">Data: @n.Data.ToShortDateString()</small>
+    <hr />
+
+    <h2>Notițele Tale</h2>
+
+    @if (Model.Note.Count == 0)
+    {
+        <p>Nu ai încă notițe salvate.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var n in Model.Note.OrderByDescending(n => n.Data))
+            {
+                <div class="card my-3 pastel-card">
+                    <div class="card-header pastel-header d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">@n.Titlu</span>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@n.Id" onsubmit="return confirm('Ești sigur că vrei să ștergi această notiță?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Șterge">
+                                🗑️
+                            </button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <p>@n.Continut</p>
+                        <small class="text-muted">Data: @n.Data.ToShortDateString()</small>
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
-    </ul>
-}
+            
+        </ul>
+    }
+
+</div> <!-- Sfârșit container -->
+<script>
+    function contorizeaza(id) {
+        let count = localStorage.getItem(id);
+        count = count ? parseInt(count) + 1 : 1;
+        localStorage.setItem(id, count);
+        console.log(`Butonul '${id}' a fost apăsat de ${count} ori.`);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const btnNotita = document.getElementById("btnSalveazaNotita");
+        if (btnNotita) {
+            btnNotita.addEventListener("click", function () {
+                contorizeaza("notite_salvate");
+            });
+        }
+    });
+</script>

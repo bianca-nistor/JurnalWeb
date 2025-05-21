@@ -22,7 +22,7 @@ public class LoginModel : PageModel
         if (service.ValidateUser(User.Username, User.Password))
         {
             HttpContext.Session.SetString("username", User.Username); // Salvare sesiune
-            return RedirectToPage("/Jurnal");
+            return RedirectToPage("/Dashboard");
             
         }
         else

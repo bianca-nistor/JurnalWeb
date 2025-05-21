@@ -9,6 +9,10 @@ public class JurnalModel : PageModel
     [BindProperty]
     public Note Nota { get; set; }
 
+    // Exemplu de salvare a noti?ei
+   
+
+
     public IActionResult OnGet()
     {
         var username = HttpContext.Session.GetString("username");
@@ -27,12 +31,22 @@ public class JurnalModel : PageModel
             return RedirectToPage("/Login");
 
         if (!ModelState.IsValid)
-        {
             return Page();
-        }
 
         var service = new JurnalService();
         service.SaveNote(username, Nota);
+        TempData["Message"] = "Notita fost salvata cu succes!";
+        return RedirectToPage();
+    }
+
+    public IActionResult OnPostDelete(Guid id)
+    {
+        var username = HttpContext.Session.GetString("username");
+        if (string.IsNullOrEmpty(username))
+            return RedirectToPage("/Login");
+
+        var service = new JurnalService();
+        service.DeleteNote(username, id);
         return RedirectToPage();
     }
 }
