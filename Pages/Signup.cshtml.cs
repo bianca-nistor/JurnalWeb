@@ -10,11 +10,20 @@ public class SignupModel : PageModel
 
     public string Mesaj { get; set; }
 
+    [BindProperty]
+    public string ConfirmPassword { get; set; }
+
     public IActionResult OnPost()
     {
         var service = new UserService();
 
-        if (service.UserExists(User.Username,User.Password))
+        if (User.Password != ConfirmPassword)
+        {
+            Mesaj = "Parolele nu coincid.";
+            return Page();
+        }
+
+        if (service.UserExists(User.Username, User.Password))
         {
             Mesaj = "Acest nume de utilizator este deja folosit.";
             return Page();
@@ -23,6 +32,9 @@ public class SignupModel : PageModel
         service.AddUser(User);
         Mesaj = "Cont creat cu succes! Mergi la login.";
 
-        return Page(); 
+        return Page();
     }
+
+
+
 }

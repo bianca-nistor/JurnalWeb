@@ -1,22 +1,44 @@
 [
   {
     "Username": "fdgfd",
-    "Password": "frefger"
+    "Password": "frefger",
+    "BgColor": "#fff9f5",
+    "TextColor": "#333333"
   },
   {
     "Username": "Bianca",
-    "Password": "12345"
+    "Password": "12345",
+    "BgColor": "#fff9f5",
+    "TextColor": "#333333"
   },
   {
     "Username": "zoe",
-    "Password": "5678"
+    "Password": "5678",
+    "BgColor": "#fff9f5",
+    "TextColor": "#333333"
   },
   {
     "Username": "abi",
-    "Password": "fantacolasprite"
+    "Password": "fantacolasprite",
+    "BgColor": "#fff9f5",
+    "TextColor": "#333333"
   },
   {
     "Username": null,
-    "Password": null
+    "Password": null,
+    "BgColor": "#fff9f5",
+    "TextColor": "#333333"
+  },
+  {
+    "Username": "Marcika",
+    "Password": "Iepuras23",
+    "BgColor": "#fff9f5",
+    "TextColor": "#333333"
+  },
+  {
+    "Username": "lola",
+    "Password": "123",
+    "BgColor": "#fff9f5",
+    "TextColor": "#333333"
   }
 ]

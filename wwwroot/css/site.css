@@ -17,8 +17,68 @@ html {
   min-height: 100%;
 }
 
+
+
+
+
 body {
-  margin-bottom: 60px;
+    background-color: #fff9f5;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.pastel-card {
+    background-color: #ffeef3;
+    border-left: 6px solid #fcb7af;
+}
+
+.pastel-header {
+    background-color: #d4f8d4;
+}
+
+.pastel-button {
+    background-color: #fff3b0;
+    border: none;
+    color: #333;
+}
+
+    .pastel-button:hover {
+        background-color: #ffe066;
+    }
+
+.form-label {
+    font-weight: 500;
+}
+body {
+    background-color: #fff9f5;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.pastel-card {
+    background-color: #ffeef3;
+    border-left: 6px solid #fcb7af;
+}
+
+.pastel-header {
+    background-color: #d4f8d4;
+}
+
+.pastel-button {
+    background-color: #fff3b0;
+    border: none;
+    color: #333;
+}
+
+    .pastel-button:hover {
+        background-color: #ffe066;
+    }
+
+.form-label {
+    font-weight: 500;
+}
+
+
+body {
+    margin-bottom: 60px;
 }
 .sticky-background {
     display: flex;
@@ -112,6 +172,38 @@ small {
     font-size: 0.9rem;
     color: #777;
 }
+.search-form {
+    background-color: #e6f4ead4; /* verde pastel, similar cu clasa .green */
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 0 auto 20px auto;
+}
+
+.search-input {
+    background-color: #e6f4ead4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    width: 100%;
+    font-size: 16px;
+    color: #333;
+}
+
+.pastel-button-yellow {
+    background-color: #fff3b0; /* galben pastel */
+    border: none;
+    color: #333;
+    padding: 8px 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .pastel-button-yellow:hover {
+        background-color: #ffe066; /* galben mai intens la hover */
+    }
 
 /* 
 body {

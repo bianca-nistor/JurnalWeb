@@ -48,7 +48,8 @@
 </div>*@
 
 <div>
-    <div class="container mt-3">
+    <div class="container mt-3" style="background-color:@Model.CurrentUser.BgColor; color:@Model.CurrentUser.TextColor;">
+
         <h2 class="text-center" style="color:#d17b88;">Adaugă o amintire</h2>
 
         <form method="post" enctype="multipart/form-data" class="card p-4 pastel-card shadow-sm mb-4">
@@ -63,6 +64,14 @@
             </div>
             <button type="submit" class="btn pastel-button">Salvează</button>
         </form>
+
+        <form method="get" class="mb-4 p-3" style="background-color: #e6f4ead4; border-radius: 8px;">
+            <div class="input-group">
+                <input type="text" name="Search" value="@Model.Search" class="form-control" placeholder="Caută o poză după notiță" />
+                <button type="submit" class="btn" style="background-color: #fff3b0; color: #333;">Caută</button>
+            </div>
+        </form>
+
 
 
     <h4 class="text-center mb-4">Galerie</h4>

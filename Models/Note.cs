@@ -1,4 +1,6 @@
-﻿namespace JurnalWeb.Models
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace JurnalWeb.Models
 {
     public class Note
     {

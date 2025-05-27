@@ -1,52 +1,73 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using JurnalWeb.Models;
 using JurnalWeb.Services;
+using System.Text.Json;
+using System.IO;
 
-public class JurnalModel : PageModel
+namespace JurnalWeb.Pages
 {
-    public List<Note> Note { get; set; } = new();
-    [BindProperty]
-    public Note Nota { get; set; }
-
-    // Exemplu de salvare a noti?ei
-   
-
-
-    public IActionResult OnGet()
+    public class JurnalModel : PageModel
     {
-        var username = HttpContext.Session.GetString("username");
-        if (string.IsNullOrEmpty(username))
-            return RedirectToPage("/Login");
+        private readonly JurnalService _jurnalService;
 
-        var service = new JurnalService();
-        Note = service.LoadNotes(username);
-        return Page();
-    }
+        public JurnalModel()
+        {
+            _jurnalService = new JurnalService();
+        }
 
-    public IActionResult OnPost()
-    {
-        var username = HttpContext.Session.GetString("username");
-        if (string.IsNullOrEmpty(username))
-            return RedirectToPage("/Login");
+        public List<Note> Note { get; set; } = new List<Note>();
 
-        if (!ModelState.IsValid)
+        [BindProperty]
+        public Note Nota { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string Search { get; set; }
+
+        public IActionResult OnGet()
+        {
+            var username = HttpContext.Session.GetString("username");
+            if (string.IsNullOrEmpty(username))
+                return RedirectToPage("/Login");
+
+            var toateNotele = _jurnalService.LoadNotes(username);
+
+            Note = string.IsNullOrEmpty(Search)
+                ? toateNotele
+                : toateNotele.Where(n =>
+                       n.Titlu.Contains(Search, StringComparison.OrdinalIgnoreCase) ||
+                       n.Continut.Contains(Search, StringComparison.OrdinalIgnoreCase)).ToList();
+
             return Page();
+        }
 
-        var service = new JurnalService();
-        service.SaveNote(username, Nota);
-        TempData["Message"] = "Notita fost salvata cu succes!";
-        return RedirectToPage();
-    }
+        public IActionResult OnPost()
+        {
+            var username = HttpContext.Session.GetString("username");
+            if (string.IsNullOrEmpty(username))
+                return RedirectToPage("/Login");
 
-    public IActionResult OnPostDelete(Guid id)
-    {
-        var username = HttpContext.Session.GetString("username");
-        if (string.IsNullOrEmpty(username))
-            return RedirectToPage("/Login");
+            var notes = _jurnalService.LoadNotes(username);
 
-        var service = new JurnalService();
-        service.DeleteNote(username, id);
-        return RedirectToPage();
+            Nota.Id = Guid.NewGuid();
+            Nota.Data = DateTime.Now;
+            notes.Add(Nota);
+
+            var json = JsonSerializer.Serialize(notes);
+            System.IO.File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "App_Data", $"{username}_notes.json"), json);
+
+            TempData["Message"] = "Notița a fost salvată!";
+            return RedirectToPage();
+        }
+
+        public IActionResult OnPostDelete(Guid id)
+        {
+            var username = HttpContext.Session.GetString("username");
+            if (string.IsNullOrEmpty(username))
+                return RedirectToPage("/Login");
+
+            _jurnalService.DeleteNote(username, id);
+            return RedirectToPage();
+        }
     }
 }

@@ -42,6 +42,22 @@ namespace JurnalWeb.Services
             var updatedNotes = notes.Where(n => n.Id != id).ToList();
             File.WriteAllText(path, JsonSerializer.Serialize(updatedNotes));
         }
+        public void UpdateNote(string username, Guid id, string titluNou, string continutNou)
+        {
+            var path = GetUserFilePath(username);
+            if (!File.Exists(path)) return;
+
+            var notes = JsonSerializer.Deserialize<List<Note>>(File.ReadAllText(path)) ?? new List<Note>();
+            var note = notes.FirstOrDefault(n => n.Id == id);
+            if (note != null)
+            {
+                note.Titlu = titluNou;
+                note.Continut = continutNou;
+                File.WriteAllText(path, JsonSerializer.Serialize(notes));
+            }
+        }
+
 
     }
+
 }
